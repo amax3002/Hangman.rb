@@ -7,8 +7,10 @@ user_picks = []
 letters_of_word_choice = chosen_word.split("")
 inbetween_array = []
 storing_array = []
+finish = 0
 puts ''
-
+alphabet = ("a".."z").to_a
+puts alphabet
 
 def create_fill_out(guesses, chars)
   masked_characters = []
@@ -34,77 +36,55 @@ end
 
 
 
-def no_double_guesses(guesses, input, guess_count)
-    if guesses.include?(input) || input ==""
-      puts ''
-      puts "You already guessed this please use another"
-      puts ''
-      guess_count += 1
-    else
-      guesses << input
-    end
+def no_double_guesses(guesses, input, guess_count, valid_input)
+  if !valid_input.include?(input)
+    puts ''
+    puts "Please enter a valid input (a-z)"
+    puts ''
+    guess_count += 1
+  elsif guesses.include?(input) || input == ""
+    puts ''
+    puts "You already guessed this please use another"
+    puts ''
+    guess_count += 1
+  else
+    guesses << input
+  end
   return guess_count
 end
 
-def end_game()
+def end_game(guesses, answer, guesses_final, finish)
+  if guesses == answer.join(" ")
+    finish += 1
+    puts "_____You Win_____!!"
+  elsif guesses_final == 0
+    puts "You LOSE"
+  else
+  end
+  return finish
+end
 
 
-while max_number_of_guess != 0
+
+
+while max_number_of_guess != 0 && finish != 1
   puts ''
   puts "You have #{max_number_of_guess} guesses left."
   puts "You have already guessed#{notify_user(user_picks)}"
   puts "Please submit another guess:"
 
   input = gets.chomp
+  puts ''
+  max_number_of_guess = no_double_guesses(user_picks, input, max_number_of_guess, alphabet)
 
-  max_number_of_guess = no_double_guesses(user_picks, input, max_number_of_guess)
-
-
-  #user_picks << input
 
   puts create_fill_out(user_picks,letters_of_word_choice)
-
+  inbetween_array = create_fill_out(user_picks,letters_of_word_choice)
 
   max_number_of_guess -= 1
+  puts ''
+
+
+  finish = end_game(inbetween_array, letters_of_word_choice, max_number_of_guess, finish)
+  puts ''
 end
-#
-# #if match(user_pick,letters_of_word_choice)
-#
-# def inputing_letter(array1,array2,array3)
-#   return " _" * length_word if array1.empty?
-#   array1.each do |element|
-#     if array1.include? element == true then
-#       array3 << element
-#       puts "ASIUFHKJSHF"
-#     else
-#       array3 << nil
-#     end
-#   end
-# end
-#
-# puts '__1__'
-# puts inputing_letter(user_pick,letters_of_word_choice,inbetween_array)
-# # puts '__2__'
-# # puts user_pick.join(", ")
-# # puts '__3__'
-# # puts letters_of_word_choice.join(", ")
-# # puts '__4__'
-# # puts inbetween_array.join(", ")
-#
-# #
-# #   puts "
-# #   The letters already picked are #{user_pick.join(", ")}
-# #   Word is: "
-#   puts " _" * length_word
-#   puts 'Choose a Letter: '
-#
-#
-#
-#
-# while i != 8
-#   setup_menu()
-#   input = gets.chomp
-#   user_pick << input
-#   i += 1
-#   break if input.empty?
-# end
