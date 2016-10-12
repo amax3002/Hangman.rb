@@ -1,27 +1,31 @@
 
-word_choice = ["banana","obama","pie","adele","submarine"]
-chosen_word = word_choice.sample
-length_word = chosen_word.length.to_i
-max_number_of_guess = length_word + 5
-user_picks = []
-letters_of_word_choice = chosen_word.split("")
-inbetween_array = []
-storing_array = []
-finish = 0
-puts ''
 alphabet = ("a".."z").to_a
-puts alphabet
+do_you_want_to_play = "Yes"
+puts ''
+
+while do_you_want_to_play == "Yes"
+  word_choice = ["banana","obama","pie","adele","submarine"]
+  chosen_word = word_choice.sample
+  length_word = chosen_word.length.to_i
+  max_number_of_guess = 6
+  user_picks = []
+  letters_of_word_choice = chosen_word.split("")
+  inbetween_array = []
+  storing_array = []
+  finish = 0
 
 def create_fill_out(guesses, chars)
   masked_characters = []
   chars.each do |element|
     if guesses.include?(element)
       masked_characters << element
+
     else
       masked_characters << "_"
     end
   end
   return masked_characters.join(" ")
+
 end
 
 
@@ -53,12 +57,30 @@ def no_double_guesses(guesses, input, guess_count, valid_input)
   return guess_count
 end
 
-def end_game(guesses, answer, guesses_final, finish)
+
+
+def end_game(guesses, answer, guesses_final, finish, word_picked)
   if guesses == answer.join(" ")
     finish += 1
-    puts "_____You Win_____!!"
+    puts "
+_You Win_!!
+ 0
+/|\\   I'm Alive
+ |
+ /\\ _______
+ You Win!"
   elsif guesses_final == 0
-    puts "You LOSE"
+    puts "
+  HANG
+ +---+-
+ |   |
+ |   0
+ |   |\\
+ |   /\\
+-+----------
+  HANG
+
+The word was: #{word_picked}"
   else
   end
   return finish
@@ -79,12 +101,19 @@ while max_number_of_guess != 0 && finish != 1
 
 
   puts create_fill_out(user_picks,letters_of_word_choice)
-  inbetween_array = create_fill_out(user_picks,letters_of_word_choice)
+  max_number_of_guess = inbetween_array = create_fill_out(user_picks,letters_of_word_choice)
+
 
   max_number_of_guess -= 1
   puts ''
 
 
-  finish = end_game(inbetween_array, letters_of_word_choice, max_number_of_guess, finish)
+  finish = end_game(inbetween_array, letters_of_word_choice, max_number_of_guess, finish, chosen_word)
   puts ''
 end
+
+puts "Do you want to play again (Yes or No)?"
+do_you_want_to_play  = gets.chomp.capitalize
+end
+puts ''
+puts 'Quiter :('
