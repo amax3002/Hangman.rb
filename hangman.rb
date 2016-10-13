@@ -58,9 +58,9 @@ end
 
 def notify_user(picks_made)
   if picks_made.any? == false
-    return ":"
+    return "Make your first guess. "
   else
-    return " (#{picks_made.join(", ")}):"
+    return "You have already guessed (#{picks_made.join(", ")})"
   end
 end
 
@@ -72,7 +72,7 @@ def no_double_guesses(guesses, input, guess_count, valid_input)
     puts "Please enter a valid input (a-z)"
     puts ''
     guess_count += 1
-  elsif guesses.include?(input) || input == ""
+  elsif guesses.include?(input) || input == "" && counter_guess_correct != ""
     puts ''
     puts "You already guessed this please use another"
     puts ''
@@ -116,8 +116,8 @@ end
 while max_number_of_guess != 0 && finish != 1
   puts ''
   puts "You have #{max_number_of_guess} guesses left."
-  puts "You have already guessed#{notify_user(user_picks)}"
-  puts "Please submit another guess:"
+  puts notify_user(user_picks)
+  puts "Please submit a guess (a-z):"
 
   input = gets.chomp
   #max_number_of_guess = correct_guesses_left(inbetween_array,input,max_number_of_guess)
