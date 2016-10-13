@@ -6,7 +6,7 @@ puts ''
 while do_you_want_to_play == "Yes"
   word_choice = File.read('/usr/share/dict/words').lines.select {|l| (4..9).cover?(l.strip.size)}.sample.strip
   length_word = word_choice.length.to_i
-  max_number_of_guess = 0
+  max_number_of_guess = 1
   user_picks = []
   letters_of_word_choice = word_choice.split("")
   inbetween_array = []
@@ -32,7 +32,6 @@ def create_fill_out(guesses, chars)
   chars.each do |element|
     if guesses.include?(element)
       masked_characters << element
-
     else
       masked_characters << "_"
     end
@@ -40,19 +39,6 @@ def create_fill_out(guesses, chars)
   return masked_characters.join(" ")
 
 end
-
-#
-# def correct_guesses_left(guesses, input, correct_guess)
-#     if guesses.include?(input)
-#       correct_guess += 1
-#
-#     else
-#       correct_guess
-#     end
-#   return correct_guess
-#
-# end
-
 
 
 
@@ -142,6 +128,7 @@ while max_number_of_guess != 0 && finish != 1
   finish = end_game(inbetween_array, letters_of_word_choice, max_number_of_guess, finish, word_choice)
   puts ''
 end
+
 
 puts "Do you want to play again (Yes or No)?"
 do_you_want_to_play  = gets.chomp.capitalize
